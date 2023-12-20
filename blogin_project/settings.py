@@ -77,7 +77,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://*.bloginxyz2-production.up.railway.app']
+# CSRF_TRUSTED_ORIGINS = ['https://*.bloginxyz2-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://*.bloginxyz-production.up.railway.app']
 
 ROOT_URLCONF = 'blogin_project.urls'
 
@@ -310,7 +311,7 @@ if not DEBUG:
     SECURE_BROWSER_XSS_FILTER = True # new
     X_FRAME_OPTIONS = 'DENY'
     # redirect all non-HTTPS traffic to HTTPS
-    # SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = True
     SECURE_HSTS_SECONDS = 3600 # new
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
