@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <div class="form-main-container">
-    <form class="w-full flex flex-col" method="post" action="">
+    <form class="w-full flex flex-col" method="post">
         {% csrf_token %}
         <div class="create-buttons flex">
             <button class="dashboard-button"><a href="{% url 'dashboard' user.id %}">Dashboard</a></button>
@@ -18,16 +18,13 @@
             </div>
             <div class="form-choice w-full" id="category">
                 {{form.category_names}}
-                <!-- <input type="text" name="categories" placeholder="Add categories [comma separated]"> -->
             </div>
             <div class="form-choice flex w-full" id="tag">
                 <div class="form-choice-tags">
                     {{form.tag_names}}
                 </div>
-                <!-- <input type="text" name="tags" placeholder="Add tags [comma separated]"> -->
                 <div class="form-choice-button flex">
                     <p id="show-hide-styling">Hide styling</p>
-                    <!-- {{form.image}} -->
                 </div>
             </div>
         </div>
@@ -35,7 +32,6 @@
             {{form.media}}
             {{form.content}}
         </div>
-        <!-- {{form}} -->
     </form>
 </div>
 {% endblock %}

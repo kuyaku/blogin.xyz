@@ -27,8 +27,8 @@
             </div>
             {% block midheader %}
             <div class="header-middle">
-                <a href="{% url 'home' %}">HOME</a>
-                <a>ABOUT</a>
+                <a href="{% url 'home' %}">Home</a>
+                <a>About</a>
                 {% if user.is_authenticated %}
                 {% if is_blogger %}
                 <a href="{% url 'dashboard' user.id %}">Dashboard</a>
@@ -101,9 +101,8 @@
     <script src="{% static 'js/publish.js' %}"></script>
     <script src="{% static 'js/delete.js' %}"></script>
     <script src="{% static 'js/navigation.js' %}"></script>
-    <!-- <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script> -->
     <script defer src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
-    <!-- <script src="{% static 'js/show_styling.js' %}"></script> -->
+    <script src="{% static 'js/show_styling.js' %}"></script>
 
 </body>
 </html>

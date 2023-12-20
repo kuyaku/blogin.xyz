@@ -92,6 +92,7 @@ class BlogListView(ListView):
 
 
 class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    print('************** Creating new post *******************')
     model = Post
     template_name = 'new_blog.html'
     form_class = PostCreateForm
@@ -108,11 +109,18 @@ class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return self.request.user.groups.filter(name = 'Bloggers').exists()
 
     def get_success_url(self):
-        return reverse_lazy('blog-list')
+        return reverse_lazy('dashboard', kwargs = {'pk': self.request.user.id})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        is_blogger = Blogger.objects.filter(user = self.request.user).exists()
+        context['is_blogger'] = is_blogger
+        return context
 
     def form_valid(self, form):
         try:
-            form.instance.author = get_object_or_404(Blogger, user__id=self.request.user.id)
+            # form.instance.author = get_object_or_404(Blogger, user__id=self.request.user.id)
+            form.instance.author = self.request.user.blogger
         except Blogger.DoesNotExist:
             print("register as blogger first")
             pass
@@ -139,12 +147,6 @@ class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
             published_post.save()
             
         return super().form_valid(form)
-    
-    def generateRandomString(self, length = 12):
-        characters = string.ascii_letters + string.digits + string.ascii_lowercase + string.ascii_uppercase
-        randomString = "".join(random.choice(characters) for _ in range(length))
-        return randomString
-
 
     def get_processed_tags_categories(self, modal, unprocessed_input):
         names_list = [name.strip().upper() for name in unprocessed_input.split(',') if name != '']
@@ -171,14 +173,13 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     # checking if the user is same as the author of the post
     def dispatch(self, request, *args, **kwargs):
         post = self.get_object()
-
         if request.user != post.author.user:
             return self.handle_no_permission()
         
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse_lazy('blog-list')
+        return reverse_lazy('dashboard', kwargs = {'pk': self.request.user.id})
 
     def get_initial(self):
         # Retrieve the existing post object
@@ -205,7 +206,7 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         content = form.cleaned_data['content']
         form.instance.content = content
         # print(form.cleaned_data['image'])
-        form.instance.image = form.cleaned_data['image']
+        # form.instance.image = form.cleaned_data['image']
 
         title = form.cleaned_data['title']
 

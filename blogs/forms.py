@@ -30,7 +30,7 @@ class PostCreateForm(forms.ModelForm):
         if tag_names:
             return [name.strip().upper() for name in tag_names.split(',') if name != '']
         return []
-        
+       
 
 class PostUpdateForm(forms.ModelForm):
     category_names = forms.CharField(max_length = 300, required=False, widget=forms.TextInput(attrs={'placeholder': 'Comma separated categories'}))
@@ -41,7 +41,7 @@ class PostUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['content', 'title', 'sub_title', 'image', 'category_names', 'tags']
+        fields = ['content', 'title', 'sub_title', 'category_names', 'tags']
         # fields = '__all__'
 
 
