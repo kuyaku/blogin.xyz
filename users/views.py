@@ -33,11 +33,12 @@ class BloggerSignupView(SignupView):
         response = super().form_valid(form)
         user = self.user
         try:
-            blogger = Blogger.objects.create(user = user, bio = bio, profile_picture = profile_picture)
+            blogger = Blogger.objects.create(user = user, bio = bio)
             group = Group.objects.get(name = 'Bloggers')
             blogger.interests.set(user_interests)
             user.groups.add(group)
         except:
+            print("Error while blogger signup")
             pass
         return response
 
@@ -65,15 +66,17 @@ class BloggerRegisterView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         user = self.request.user
 
         try:
-            blogger_instance = Blogger.objects.create(user = user, bio = bio, profile_picture = profile_picture,)
+            blogger_instance = Blogger.objects.create(user = user, bio = bio)
             blogger_instance.interests.set(user_interests)
             group = Group.objects.get(name = 'Bloggers')
+            print("********* Available groups ***************")
+            print(group)
             user.groups.add(group)
         except:
             print("Error while registering as blogger")
             pass
-        
-        return redirect(self.success_url)
+        print(self.get_success_url())
+        return redirect(self.get_success_url())
 
 
 class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
