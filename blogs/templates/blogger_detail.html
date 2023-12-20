@@ -1,0 +1,164 @@
+{% extends 'base3.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block content %}
+<div class="container">
+    <div class="container-top">
+        <div class="container-blogger">
+            <div class="flex user-top">
+                <div class="container-blogger-image">
+                    {% if blogger.profile_picture %}
+                    <img src="{{blogger.profile_picture.url}}" alt="profilePic">
+                    {% else %}
+                    <img src="{% static 'images/defaults/avatars/user.png' %}" alt="profilePic">
+                    {% endif %}
+                </div>
+                <div class="container-blogger-info">
+                    <div class="blogger-username">
+                        <h1>
+                            {{ blogger.user.get_name }}
+                        </h1>
+                        <div class="follow-button">
+                            <form id="follow-form" action="{% url 'follow-action' blogger.id %}" method="post">
+                                {% csrf_token %}
+                                <button class="follow-button-user" type="submit" name="follow-button">
+                                    {% if has_followed %}
+                                    <p id="unfollow">UNFOLLOW</p>
+                                    {% else %}
+                                    <p id="follow">FOLLOW</p]>
+                                    {% endif %}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="blogger-posts-follows">
+                        <p>
+                            <strong>{{blogger.my_blogs.count}}</strong> posts
+                        </p>
+                        <p>
+                            <strong><span id="follower-count">{{blogger.my_followers.count}}</span></strong> followers
+                        </p>
+                        <p>
+                            <strong>{{blogger.ifollows.count}}</strong> following
+                        </p>      
+                    </div>
+                    <div class="user-info-large">
+                        <div class="blogger-bio">
+                            <p>
+                                {{ blogger.bio }}
+                            </p>
+                        </div>
+                        <div class="blogger-interests">
+                            <p>I love writing about:</p>
+                            {% for interest in blogger.interests.all %}
+                            <span><strong> {{ interest }} </strong></span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="user-info-small">
+                <div class="blogger-bio">
+                    <p>
+                        {{ blogger.bio }}
+                    </p>
+                </div>
+                <div class="blogger-interests">
+                    <p>I love writing about:</p>
+                    {% for interest in blogger.interests.all %}
+                    <span><strong> {{ interest }} </strong></span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-bottom">
+        <div class="main-section-main flex flex-col blogger-posts">
+            <div class="heading">
+                <h2>Posts</h2>
+            </div>
+            <div class="flex flex-col post-container">
+                {% if my_blogs_list %}
+                {% for post in my_blogs_list %}
+                <div class="dashboard-post flex">
+                    <div class="flex post-main">
+                       
+                            {% if post.post.image %}
+                            <img id="post-img" src="{{post.post.image.url}}">
+                            {% else %}
+                            <img id="post-img" src="{% static 'images/defaults/posts/blog.png' %}">
+                            {% endif %}
+                       
+                        <div class="flex flex-col post-content">
+                            <div class="post-right-info flex flex-col">
+                                <div>
+                                    <h3><a href="{% url 'blog-detail' post.id %}">{{post.post.get_short_heading2}}</a></h3>
+                                    <div class="post-short-description">
+                                        <p>{{post.post.sub_title | safe}}</p>
+                                    </div>
+                                    <div>
+                                        <p class="date">{{post.get_date}}</p>
+                                    </div>
+                                </div>
+                                <div class="post-buttons flex">
+                                    <div class="flex post-info">
+                                        <img src="{% static 'images/icons/heart.png' %}">
+                                        <p>{{ post.likes.count }}</p>
+                                        <img src="{% static 'images/icons/view.png' %}">
+                                        <p>{{ post.views.count }}</p>
+                                        <img src="{% static 'images/icons/comment.png' %}">
+                                        <p>{{ post.comments.count }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+                {% else %}
+                <p class="message">No unpublished posts yet!</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="similar-bloggers">
+            <h2 class="heading">Similar People</h2>
+            <div class="blogger-list">
+                {% for blogger2 in similar_bloggers %}
+                    {% if blogger != blogger2 %}
+                    <div class="blogger-card">
+                        <div class="blogger-card-left">
+                            {% if blogger2.profile_picture %}
+                            <img src="{{blogger2.profile_picture.url}}" alt="profilePic">
+                            {% else %}
+                            <img src="{% static 'images/defaults/avatars/user.png' %}" alt="profilePic">
+                            {% endif %}
+                        </div>
+                        <div class="blogger-card-right">
+                            <h2><a href="{% url 'blogger-detail' blogger2.id %}">{{blogger2.user.get_name}}</a></h2>
+                            <div class="blogger-card-right-info flex">
+                                <p>{{blogger2.my_blogs.count}} Posts</p>
+                                <p>&middot;<span id="follower-count-{{blogger2.id}}">{{blogger2.my_followers.count}}</span> followers</p>
+                            </div>
+
+                            <form class="follow-form" action="{% url 'follow-action' blogger2.id %}" method="post" data-blogger-id="{{blogger2.id}}">
+                                {% csrf_token %}
+                                <button class="follow-button-user follow-button-blog-detail" type="submit" name="follow-button">
+                                    {% with current_user=request.user %}
+                                    {% if current_user|is_following:blogger2 %}
+                                    <p id="unfollow">Unfollow</p>
+                                    {% else %}
+                                    <p id="follow">Follow</p]>
+                                    {% endif %}
+                                    {% endwith %}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

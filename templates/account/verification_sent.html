@@ -1,0 +1,25 @@
+{% extends './login.html' %}
+{% load i18n %}
+{% load allauth %}
+
+{% block login-logout-title %}
+<h1 style="color: rgb(112, 7, 7); border-bottom-color: rgb(112, 7, 7);">Email Verification</h1>
+{% endblock %}
+
+
+{% block remember-me %}
+{% endblock %}
+
+{% block login-signup-form %}
+<p style="font-size: 1.3rem;">We have sent an email on {{email}} for verification. </p>
+<p style="font-size: 1.3rem;">Follow the link to verify you email address. If you don't find it, check your spam folder.</p>
+<div class="flex">
+    <p style="font-size: 1.3rem; text-wrap: nowrap;">You can send a new link </p>
+    <form style="display: flex; align-items: center; flex-direction: row;" method="post" action="{% url 'account_confirm_email_new' %}">
+        {% csrf_token %}
+        <button style="background-color: inherit; color: rgb(249, 115, 22); padding: 0; margin-left: 5px; font-size: 1.1rem; margin-top: 2px; text-decoration: underline;" type="submit">here</button>
+    </form>
+</div>
+
+
+{% endblock %}

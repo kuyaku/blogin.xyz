@@ -1,0 +1,191 @@
+/* 320px — 480px: Mobile devices
+481px — 768px: iPads, Tablets
+769px — 1024px: Small screens, laptops
+1025px — 1200px: Desktops, large screens
+1201px and more —  Extra large screens, TV */
+
+
+@media (max-width: 1200px) {
+    /* extra large screens */
+    /* body {
+        background-color: red;
+    } */
+}
+@media (max-width: 1024px) {
+    /* small screens, laptops */
+    /* body {
+        background-color: blue;
+    } */
+    .header-middle-logo {
+        font-size: 1.8rem;
+    }
+}
+@media (max-width: 850px) {
+    /* ipads, tabledts */
+    body {
+        /* background-color: green; */
+        padding-top: 0;    
+    }
+
+    #username-header {
+        font-size: 1.1rem
+    }
+
+    .header-left {
+        display: none;
+    }
+
+    .menu-icon {
+        display: block;
+    }
+
+    .main-container {
+        width: 100%;
+        gap: 0;
+    }
+
+    .header-middle {
+        order: -1;
+    }
+
+    .main-section-front-info a {
+        font-size: 1rem;
+    }
+
+    .main-section-recent-container {
+        max-width: 100%;
+    }
+
+    .main-section-recent h1 {
+        font-size: 1rem;
+        padding: 0;
+    }
+
+    .post-container-trending {
+        gap: 10px;
+    }
+
+    .post-trending-card {
+        border: 1px solid rgb(236, 236, 236);
+        border-radius: 5px;
+        padding: 5px;
+        max-width: 300px;
+    }
+
+    .post-trending-card-category, .post-recent-card-category {
+        font-size: 0.7rem;
+    }
+
+    .post-trending-card-title {
+        font-size: 1rem;
+    }
+
+    .post-trending-card-author, .post-recent-card-author {
+        font-size: 0.9rem;
+    }
+
+    .post-trending-card-author-followers, .post-recent-card-author-followers {
+        font-size: 0.8rem;
+    }
+
+    .post-trending-card-bottom, .post-recent-card-bottom {
+        font-size: 0.7rem;
+    }
+
+    .post-trending-card-bottom img, .post-recent-card-bottom img {
+        height: 15px;
+        width: 15px;
+    }
+
+    .post-container {
+        gap: 10px;
+        padding-top: 0px;
+        flex-direction: column-reverse;
+    }
+
+    .recent-posts {
+        flex: none;
+    }
+
+    .post-card {
+        gap: 10px;
+        padding: 10px;
+        flex-direction: column;
+    }
+
+    .post-card img {
+        width: 100%;
+    }
+
+    .post-recent-card-title {
+        font-size: 1.2rem;
+    }
+
+    .post-recent-content {
+        font-size: 0.9rem;
+    }
+
+    .category-container {
+        gap: 5px;
+        padding: 5px;
+    }
+
+    .category-heading {
+        font-size: 1rem;
+    }
+
+    .category-container button {
+        padding: 5px;
+    }
+
+    .login-logout-heading h1 {
+        font-size: 1.6rem;
+    }
+
+    .stretch-full input {
+        font-size: 1.1rem;
+    }
+
+    .blogger-signup input {
+        font-size: 0.95rem !important;
+    }
+
+    #blogger-signup-heading {
+        font-size: 1.3rem;
+    }
+
+    .blogger-signup textarea {
+        max-height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* mobile devices */
+    body{
+        background-color: white;
+    }
+
+    /* .header {
+        border: 1px solid blue;
+    } */
+    .header-middle-logo {
+        font-size: 1.5rem;
+    }
+
+    .header-left, .header-right {
+        font-size: 0.9rem;
+        /* padding: 0; */
+    }
+
+    .main-section-recent {
+        padding: 5px;
+    }
+
+    .post-container-trending {
+        padding: 10px 4px;
+    }
+
+    .post-trending-card {
+        max-width: 100%;
+    }
+}

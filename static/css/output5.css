@@ -1,0 +1,162 @@
+.form-main-container {
+    flex: 1;
+    width: 100%;
+    /* border-top: 2px solid rgb(240, 240, 240); */
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* justify-content: center; */
+    margin-bottom: -20px;
+}
+
+.form-main-container form {
+    /* border: 1px solid red; */
+    flex: 1;
+}
+
+.create-buttons {
+    /* border: 1px solid red; */
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.publish-button {
+    padding: 10px;
+    background-color: rgb(249, 115, 22);
+    color: white;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.save-button, .dashboard-button {
+    font-size: 1.1rem;
+}
+
+.save-button {
+    color: rgb(249, 115, 22);
+}
+
+
+.other-content {
+    padding: 40px 0;
+    flex: 1;
+}
+
+.w-full, .w-full input{
+    width: 100%;
+}
+
+.form-choice {
+    flex-direction: column;
+}
+
+.form-choice-tags {
+    flex: 1;
+}
+
+.form-choice-button {
+    /* border: 1px solid red; */
+    padding: 0 10px;
+    gap: 5px;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 5px;
+}
+
+.form-choice-button p {
+    font-size: 0.8rem;
+    padding: 4px 6px;
+    width: fit-content;
+    text-wrap: nowrap;
+    background-color: black;
+    height: fit-content;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    border-radius: 3px;
+}
+
+.form-heading input, .form-choice input{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid rgba(249, 116, 22, 0.13);
+    font-size: 1.1rem;
+    padding: 10px;
+}
+
+.form-choice input {
+    padding: 5px;
+    font-size: 0.8rem;
+}
+
+form {
+    height: 100%;
+}
+
+
+.text-editor {
+    /* border: 10px solid rgb(9, 119, 8); */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* height: 100%; */
+}
+
+.styling-pallete {
+    display: none !important;
+}
+/* 
+.django-ckeditor-widget{
+    border: 5px solid orange;
+    flex: 1;
+    display: flex !important;
+    flex-direction: column;
+}
+
+#cke_id_content {
+    border: 3px solid blue;
+    flex: 1;
+    display: flex !important;
+    flex-direction: column;
+}
+
+.cke_inner {
+    border: 10px solid yellow !important;
+    display: flex !important;
+    flex-direction: column;
+    flex: 1;
+}
+
+#cke_1_top {
+    border: 1px solid red;
+    display: none;
+    user-select: all !important;
+}
+
+
+
+#cke_1_contents {
+    border: 5px solid red;
+    display: flex !important;
+    flex-direction: column;
+    flex: 1;
+}
+
+#cke_1_contents iframe {
+    border: 3px solid green;
+    max-width: 99%;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    max-height: 100px;
+}
+
+#cke_1_contents iframe > html {
+    flex: 1;
+    border: 5px solid purple;
+}
+
+#cke_1_bottom {
+    display: none !important;
+} */

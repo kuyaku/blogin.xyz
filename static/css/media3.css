@@ -1,0 +1,130 @@
+/* 320px — 480px: Mobile devices
+481px — 768px: iPads, Tablets
+769px — 1024px: Small screens, laptops
+1025px — 1200px: Desktops, large screens
+1201px and more —  Extra large screens, TV */
+
+@media (max-width: 1200px) {
+    /* body {
+        background-color: red;
+    } */
+
+    .blog-title h1 {
+        font-size: 1.4rem;
+    }
+}
+@media (max-width: 1024px) {
+    /* body {
+        background-color: rgb(252, 252, 252);
+    } */
+
+    .main-container-style-2 {
+        width: 80%;
+    }
+
+    .blog-top {
+        flex-direction: column-reverse;
+        min-height: 400px;
+        max-height: none;
+        width: 100%;
+        /* border: 1px solid red; */
+    }
+
+    .header-right, .header-middle  {
+        font-size: 1.1rem;
+        align-items: center;
+    }
+
+    .header-left h1 {
+        font-size: 2.2rem;
+        padding-left: 10px;
+    }
+
+}
+@media (max-width: 768px) {
+    body {
+        /* background-color: rgb(216, 216, 216); */
+        padding-top: 5px;
+    }
+
+    .main-container-style-2 {
+        width: 100%;
+    }
+
+    .menu-icon {
+        display: flex;
+    }
+
+    .other-content {
+        padding: 5px 0px;
+    }
+
+    .header-left h1 {
+        font-size: 1.9rem;
+    }
+
+    .header-middle  {
+        display: none;
+    }
+
+    .blog-title {
+        width: 100%;
+    }
+
+    .blog-top-title {
+        width: 100%;
+    }
+
+    .blog-top-image {
+        border-radius: 0;
+    }
+
+    .blog-bottom {
+        padding: 15px;
+    }
+
+    .blog-subheading h2 {
+        font-size: 1.2rem;
+    }
+
+    .blog-content p {
+        font-size: 1rem;
+    }
+}
+@media (max-width: 480px) {
+    /* body {
+        background-color: rgb(255, 255, 255);
+    } */
+
+    .blog-top-title {
+        padding: 10px;
+    }
+
+    .blog-user {
+        justify-content: flex-end;
+    }
+
+    .blog-user-info h2 {
+        font-size: 1rem;
+    }
+
+    .blog-user-info p {
+        font-size: 0.8rem;
+    }
+
+    .follow-button-blog-detail p {
+        font-size: 0.7rem !important;
+    }
+
+    .blog-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .blog-content img {
+        min-width: 100%;
+        padding: 10px 0;
+        object-fit: cover;
+    }
+}

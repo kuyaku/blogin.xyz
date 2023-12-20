@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}BLOGin.xyz{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="header">
+        {% block header %}
+        <div class="header-left">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'blog-list' %}">All Blogs</a>
+            {% if user.is_authenticated %}
+            {% if is_blogger %}
+            <a href="{% url 'dashboard' user.id %}">Dashboard</a>
+            {% else %}
+            <a href="{% url 'viewed-posts' user.id %}">Dashboard</a>
+            {% endif %}
+            {% endif %}
+        </div>
+        <div class="header-middle">
+            <h1 class="header-middle-logo logo"><a href="{% url 'home' %}">blogin.xyz</a></h1>
+        </div>
+        <div class="header-right">
+            <div class="header-user">
+                {% if user.is_authenticated %}
+                <div class="header-right-user">
+                        <p id="username-header" style="cursor: pointer; display: flex; align-items: center; gap: 5px;">Hi {{user.get_name}}  <img id="nav-icon" src="{% static 'images/icons/down-chevron.png' %}" alt="v"></p>
+                        <div class="user-navbar" id="header-nav-items2">
+                            <div class="flex flex-col user-navbar-item">
+                                {% if is_blogger %}
+                                <a href="{% url 'blogger-profile' user.id %}">Settings</a>
+                                {% endif %}
+                                <a href="{% url 'account_logout' %}">Logout</a>
+                            </div>
+                        </div>
+                </div>
+                {% else %}
+                <a href="{% url 'account_login' %}">LOGIN</a>
+                <a href="{% url 'account_signup' %}" id="signup-button">SIGNUP</a>
+                {% endif %}
+            </div>
+            <div class="menu-icon">
+                {% if user.is_authenticated %}
+                <img id="navigation-button" src="{% static 'images/icons/navigation.png' %}">
+                <div class="flex flex-col header-nav-items" id="header-nav-items">
+                    <div class="nav-item nav-divider">
+                        <a href="{% url 'home' %}">Home</a>
+                        {% if is_blogger %}
+                        <a href="{% url 'dashboard' user.id %}">Dashboard</a>
+                        {% else %}
+                        <a href="{% url 'viewed-posts' user.id %}">Dashboard</a>
+                        {% endif %}
+                        <a href="{% url 'blog-list' %}">All Blogs</a>
+                    </div>
+                    <div class="nav-item nav-divider">
+                        {% if is_blogger %}
+                        <a href="{% url 'blogger-profile' user.id %}">Settings</a>
+                        {% endif %}
+                    </div>
+                    <div class="nav-item">
+                        <a href="{% url 'blog-create' %}">+ New Blog</a>
+                        <a href="{% url 'account_logout' %}">Logout</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+    <div class="main-section">
+        {% block frontSection %}
+        <div class="main-section-front">
+            <img src="{% static 'images/bg1.jpg' %}" alt="bg-1">
+            <div class="main-section-front-dummy"></div>
+            <div class="main-section-front-info">
+                <a href="{% url 'blog-create' %}">CREATE YOUR OWN BLOG</a>
+            </div>
+        </div>
+        {% endblock %}
+        {% block otherSection %}
+        <div class="main-section-recent">
+            {% block trendingPosts %}
+            <div class="main-section-recent-container">
+                <div class="flex">
+                    <h1>Trendings</h1>
+                    <p class="link"><a href="{% url 'blog-list' %}">See All</a></p>
+                </div>
+                <div class="post-container-trending">
+                    {% for post in post_list %}
+                        <div class="post-trending-card">
+                            <div class="post-trending-card-category">
+                                <p>
+                                    {% for category in post.post.categories.all %}
+                                    <strong>{{category.name}} </strong>
+                                    {% endfor %}
+                                </p>
+                            </div>
+                            <div class="post-trending-card-author">
+                                <div class="post-trending-card-author-picture">
+                                    {% if post.post.author.profile_picture %}
+                                    <a href="{% url 'blogger-detail' post.post.author.id %}" style="display: flex; align-items: center;">
+                                        <img src="{{post.post.author.profile_picture.url}}">
+                                    </a>
+                                    {% else %}
+                                    <a href="{% url 'blogger-detail' post.post.author.id %}" style="display: flex; align-items: center;">
+                                        <img src="{% static "images/defaults/avatars/user.png" %}">
+                                    </a>
+                                    {% endif %}
+                                    <p><a href="{% url 'blogger-detail' post.post.author.id %}">{{post.post.author.user.get_name}}</a></p>                        
+                                </div>
+                                <div class="post-trending-card-author-followers">
+                                    <p>
+                                        {{post.post.author.my_followers.count}} Followers
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="post-trending-card-title">
+                                <a href="{% url 'blog-detail' post.id %}">{{ post.post.title }}</a>
+                            </div>
+                            <div class="post-trending-card-bottom">
+                                <div>
+                                    {{post.posted_at}}
+                                </div>
+                                <div class="post-bottom-like-view">
+                                    <div class="post-bottom-like-view-container">
+                                        <img src="{% static 'images/icons/heart.png' %}" alt="LIKES"> {{post.likes.count}}
+                                    </div>
+                                    <div class="post-bottom-like-view-container">
+                                        <img src="{% static 'images/icons/view.png' %}" alt="VIEWS"> {{post.views.count}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <br>
+                {% endblock %}
+                <div class="post-container">
+                    <div class="recent-posts">
+                        {% block recentPosts %}
+                        <div>
+                            <h1>Recent Posts</h1>
+                            <p class="link"><a href="{% url 'blog-list' %}">See All</a></p>
+                        </div>
+                        <div>
+                        </div>
+                        {% for post in post_list %}
+                        <div class="post-card-container">
+                            <div class="post-card">
+                                {% if post.post.image %}
+                                <img class="post-image" src="{{post.post.image.url}}" alt="{{post.post.title}}">
+                                {% else %}
+                                <img class="post-image" src = "{% static 'images/defaults/posts/blog.png' %}" alt="blog">
+                                {% endif %}
+                                <div class="post-content">
+                                    <div class="post-recent-card-category">
+                                        <p>
+                                            {% for category in post.post.categories.all %}
+                                            <strong>{{category.name}} </strong>
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                    <div class="post-recent-card-author">
+                                        <div class="post-recent-card-author-picture">
+                                            {% if post.post.author.profile_picture %}
+                                            <img src="{{post.post.author.profile_picture.url}}">
+                                            {% else %}
+                                            <img src="{% static "images/defaults/avatars/user.png" %}">
+                                            {% endif %}
+                                            <p><a href="{% url 'blogger-detail' post.post.author.id %}">{{post.post.author.user.get_name}}</a></p>                        
+                                        </div>
+                                        <div class="post-recent-card-author-followers">
+                                            <p>
+                                                {{post.post.author.my_followers.count}} Followers
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="post-recent-card-title">
+                                        <a href="{% url 'blog-detail' post.id %}">{{ post.post.title }}</a>
+                                    </div>
+                                    <div class="post-recent-content">
+                                        {{ post.post.sub_title }}
+                                    </div>
+                                    <div class="post-recent-card-bottom">
+                                        <div>
+                                            {{post.posted_at}}
+                                        </div>
+                                        <div class="post-recent-bottom-like-view">
+                                            <div class="post-recent-bottom-like-view-container">
+                                                <img src="{% static 'images/icons/heart.png' %}" alt="LIKES"> {{post.likes.count}}
+                                            </div>
+                                            <div class="post-recent-bottom-like-view-container">
+                                                <img src="{% static 'images/icons/view.png' %}" alt="VIEWS"> {{post.views.count}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endblock %}
+                    {% block categories %}
+                    <div class="all-categories">
+                        <div class="category-heading">
+                            <p>Read what interests you more</p>
+                        </div>
+                        <div class="category-container">
+                            {% for category in category_list %}
+                            <button>
+                                <a>{{category.name}}</a>
+                            </button>
+                            {% endfor %}
+                        </div>
+                        <div class="category-bottom">
+                            <a>Discover more</a>
+                        </div>
+                    </div>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

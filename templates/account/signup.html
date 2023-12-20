@@ -1,0 +1,50 @@
+{% extends './login.html' %}
+
+{% block login-logout-title %}
+<h1>SIGN UP</h1>
+{% endblock %}
+
+
+{% block remember-me %}
+{% endblock %}
+
+{% block login-signup-form %}
+<form method="post" action="">
+    {% csrf_token %}
+    <div class="stretch-full hover-focus">
+        {{form.username}}
+    </div>
+    <div class="stretch-full hover-focus">
+        {{form.email}}
+    </div>
+    <div class="stretch-full hover-focus">
+        {{form.password1}}
+    </div>
+    <div class="stretch-full hover-focus">
+        {{form.password2}}
+    </div>
+    <div class="stretch-full error">
+        {% if form.errors.email %}
+        <p>Email already exists!</p>
+        {% endif %}
+        {% if form.password1.errors %}
+        <p>Password doesn't match the requirements!</p>
+        {% endif %}
+        {% if form.password2.errors %}
+        <p>Passwords doesn't match!</p>
+        {% endif %}
+    </div>
+    {% block login-logout-submit %}
+    <div class="stretch-full submit-button">
+        <input type="submit" value = "Sign up">
+    </div>
+    {% endblock %}
+    {% block login-logout-extra %}
+    <div class="stretch-full signup-button">
+        <p>Already have an account? <a style="color: blue;" href="{% url 'account_login' %}">Login now.</a></p>
+        <p>or</p>
+        <p><a href="{% url 'blogger-signup' %}">Sign up as a <span style="color: rgb(249, 115, 22); font-size: 1.1rem; font-weight: 600;">Blogger</span>  now.</a></p>
+    </div>
+    {% endblock %}
+</form>
+{% endblock %}

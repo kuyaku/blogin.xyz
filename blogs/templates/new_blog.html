@@ -1,0 +1,41 @@
+{% extends 'base3.html' %}
+{% load static %}
+{% block content %}
+<div class="form-main-container">
+    <form class="w-full flex flex-col" method="post" action="">
+        {% csrf_token %}
+        <div class="create-buttons flex">
+            <button class="dashboard-button"><a href="{% url 'dashboard' user.id %}">Dashboard</a></button>
+            <button name="save" class="save-button" type="submit">Save</button>
+            <button name="publish" class="publish-button" type="Submit">Publish ></button>
+        </div>
+        <div class="top-section">
+            <div class="form-heading w-full" id="main-heading">
+                {{ form.title }}
+            </div>
+            <div class="form-heading w-full" id="sub-heading">
+                {{ form.sub_title }}
+            </div>
+            <div class="form-choice w-full" id="category">
+                {{form.category_names}}
+                <!-- <input type="text" name="categories" placeholder="Add categories [comma separated]"> -->
+            </div>
+            <div class="form-choice flex w-full" id="tag">
+                <div class="form-choice-tags">
+                    {{form.tag_names}}
+                </div>
+                <!-- <input type="text" name="tags" placeholder="Add tags [comma separated]"> -->
+                <div class="form-choice-button flex">
+                    <p id="show-hide-styling">Hide styling</p>
+                    <!-- {{form.image}} -->
+                </div>
+            </div>
+        </div>
+        <div class="text-editor flex flex-col">
+            {{form.media}}
+            {{form.content}}
+        </div>
+        <!-- {{form}} -->
+    </form>
+</div>
+{% endblock %}

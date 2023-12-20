@@ -1,0 +1,108 @@
+{% extends 'base3.html' %}
+{% load static %}
+{% block content %}
+<div class="user-profile">
+    <div class="user-profile-sub-container">
+        <div class="user-profile-left">
+            <div class="user-profile-left-top">
+                <div>
+                    {% if blogger.profile_picture %}
+                    <img src="{{blogger.profile_picture.url}}" alt="profilePic">
+                    {% else %}
+                    <img src="{% static 'images/defaults/avatars/user.png' %}" alt="profilePic">
+                    {% endif %}
+                </div>
+                <div>
+                    <h2>{{blogger.user.get_name}}</h2>
+                </div>
+            </div>
+            <div class="user-profile-left-middle">
+                <a href="{% url 'dashboard' user.id %}">Dashboard</a>
+                <a>Followers</a>
+                <a>My Following</a>
+            </div>
+            <div class="user-profile-left-bottom">
+                <a href="{% url 'account_change_password' %}">Change Password</a>
+                <a href="{% url 'account_logout' %}">Logout</a>
+            </div>
+        </div>
+        <div class="user-profile-right">
+            <div class="user-profile-right-sub">
+                <div class="flex">
+                    <div class="user-profile-right-sub-left">
+                        {% if blogger.profile_picture %}
+                        <img src="{{blogger.profile_picture.url}}" alt="profilePic">
+                        {% else %}
+                        <img src="{% static 'images/defaults/avatars/user.png' %}" alt="profilePic">
+                        {% endif %}
+                        <h3>Hi, {{blogger.user.get_name}}</h3>
+                        <!-- <h3>{{blogger.user}}</h3> -->
+                    </div>
+                    <div class="user-profile-right-sub-right">
+                        {% block profile-link %}
+                        <a href="{% url 'blogger-profile-update' blogger.user.id %}">Update Profile</a>
+                        {% endblock %}
+                    </div>
+                </div>
+                <div class="profile-links">
+                    <div style="text-align: end;">
+                        <a href="{% url 'account_change_password' %}" style="color: rgb(249, 115, 22);">Change Password</a>
+                    </div>
+                </div>
+            </div>
+            <div class="user-profile-right-main">
+                {% block user-profile %}
+                <div class="user-profile-right-sub">
+                    <p class="user-profile-label">Email</p>
+                    {% if is_email_verified %}
+                    <h3 class="profile-entry">{{blogger.user.email}} <span style="color: green; font-weight: 700; font-size: 0.8rem; vertical-align: top;">VERIFIED</span></h3>
+                    {% else %}
+                    <h3 class="profile-entry">{{blogger.user.email}}</h3>
+                    <div class="flex">
+                        <p style="padding-top: 5px; padding-left: 10px; color: orange;">Your email is not verified.</p>
+                        <form style="display: flex; align-items: center; flex-direction: row;" method="post" action="{% url 'account_confirm_email_new' %}">
+                            {% csrf_token %}
+                            <button style="background-color: inherit; color: green; padding: 0; margin: 0; font-size: 0.9rem;" type="submit">Verify now.</button>
+                        </form>
+                    </div>
+                
+                    {% endif %}
+                </div>
+                <div class="user-profile-right-sub user-profile-name-section flex">
+                    <div class="user-profile-name">
+                        <p class="user-profile-label">First Name</p>
+                        {% if blogger.user.first_name %}
+                        <h3 class="profile-entry">{{blogger.user.first_name}}</h3>
+                        {% else %}
+                        <h3 class="profile-entry" style="color:gray;">Not set</h3>
+                        {% endif %}
+                    </div>
+                    <div class="user-profile-name">
+                        <p class="user-profile-label">Last Name</p>
+                        {% if blogger.user.last_name %}
+                        <h3 class="profile-entry">{{blogger.user.last_name}}</h3>
+                        {% else %}
+                        <h3 class="profile-entry" style="color: gray;">Not set</h3>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="user-profile-right-sub user-bio-interest">
+                    <p class="user-profile-label">Bio</p>
+                    <h3 class="profile-entry">{{blogger.bio}}</h3>
+                </div>
+                <div class="user-profile-right-sub user-bio-interest">
+                    <p class="user-profile-label">Interests</p>
+                    <h3 class="profile-entry">
+                    {% if blogger.interests.all %}
+                    {% for interest in blogger.interests.all %}
+                        <span>{{interest}} </span>
+                    {% endfor %}
+                    {% endif %}
+                    </h3>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

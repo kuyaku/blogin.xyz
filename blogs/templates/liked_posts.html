@@ -1,0 +1,133 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block mainsection %}
+<div class="main-section flex flex-col">
+    <div class="main-section-main flex flex-col">
+        <!-- <div class="heading">
+            <h2>My liked posts</h2>
+        </div>
+        <div class="posts flex flex-col">
+            {% if liked_posts %}
+            {% for post in liked_posts %}
+            <div class="viewed-post flex">
+                <div class="flex post-main">
+                    {% if post.post.image %}
+                    <img src="{{post.post.image.url}}">
+                    {% else %}
+                    <img src="{% static 'images/defaults/posts/blog.png' %}">
+                    {% endif %}
+                    <div class="post-detail flex flex-col">
+                        <h3><a href="{% url 'blog-detail' post.id %}">{{post.post.title}}</a></h3>
+                        <div class="post-user-info">
+                            <p>By <a>{{post.post.author}} on {{post.get_date}}</a></p>
+                        </div>
+                        <p>{{post.post.get_short_description | safe}}</p>
+                        <div class="post-other-info flex">
+                            <div class="flex comment-view-like">
+                                <img src="{% static 'images/icons/heart.png' %}" alt="Likes ">
+                                <p>{{post.likes.count}}</p>
+                                <img src="{% static 'images/icons/comment.png' %}" alt="Comments ">
+                                <p>{{post.comments.count}}</p>
+                                <img src="{% static 'images/icons/view.png' %}" alt="Views ">
+                                <p>{{post.views.count}}</p>
+                            </div>
+                            <div class="date">
+                                {% with user_instance=request.user %}
+                                <p>Liked on <span>{{ post|get_date_of_like:user_instance }}</span></p>
+                            {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="message">You haven't liked any post yet!</p>
+            {% endif %}
+        </div> -->
+        <div class="heading">
+            <h2>Liked Posts</h2>
+        </div>
+        <div class="flex flex-col post-container">
+            {% if liked_posts %}
+            {% for post in liked_posts %}
+            <div class="dashboard-post flex">
+                <div class="flex post-main">
+                    {% if post.post.image %}
+                    <img id="post-img" src="{{post.post.image.url}}">
+                    {% else %}
+                    <img id="post-img" src="{% static 'images/defaults/posts/blog.png' %}">
+                    {% endif %}
+                    <div class="flex flex-col post-content">
+                        <div>
+                            <h3><a href="{% url 'blog-detail' post.id %}">{{post.post.get_short_heading2}}</a></h3>
+                            <div class="post-user-info">
+                                <p>By <a class="user" href="{% url 'blogger-detail' post.post.author.id %}">{{post.post.author.user.get_name}}</a> on {{post.get_date}}</p>
+                            </div>
+                        </div>
+                        <div class="post-short-description">
+                            <p>{{post.post.sub_title}}</p>
+                        </div>
+                        <div class="post-buttons flex">
+                            <div class="flex post-info">
+                                <img src="{% static 'images/icons/heart.png' %}">
+                                <p>{{ post.likes.count }}</p>
+                                <img src="{% static 'images/icons/view.png' %}">
+                                <p>{{ post.views.count }}</p>
+                                <img src="{% static 'images/icons/comment.png' %}">
+                                <p>{{ post.comments.count }}</p>
+                            </div>
+                            <div class="date">
+                                {% with user_instance=request.user %}
+                                <p>Liked on <span>{{ post|get_date_of_like:user_instance }}</span></p>
+                            {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="message">You haven't liked any post yet!</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidebarlinks %}
+<div class="sidebar-top flex flex-col">
+    {% if user.is_authenticated %}
+    {% if is_blogger %}
+    <button class="new-post-button">+ New Post</button>
+    <a href="{% url 'dashboard' request.user.id %}">All posts</a>
+    {% else %}
+    <button class="new-post-button">Be a Blogger</button>
+    {% endif %}
+    {% endif %}
+</div>
+<div class="sidebar-middle flex flex-col">
+    <a href="{% url 'viewed-posts' request.user.id %}">Reading List</a>
+    <a class="selected" href="{% url 'liked-posts' request.user.id %}">Liked Posts</a>
+    <a>Followers</a>
+    <a>Following</a>
+    <a>My Comments</a>
+</div>
+<div class="sidebar-bottom flex flex-col">
+    <a href="{% url 'blogger-profile' user.id %}">Settings</a>
+</div>
+{% endblock %}
+
+{% block links %}
+{% if user.is_authenticated %}
+{% if is_blogger %}
+<a class="new-post-button" href="{% url 'blog-create' %}">+ New Post</a>
+<a href="{% url 'dashboard' user.id %}">Dashboard</a>
+{% else %}
+<a class="new-post-button" href="{% url 'blogger-register' user.id %}">Be a Blogger</a>
+{% endif %}
+{% endif %}
+<a href="{% url 'viewed-posts' request.user.id %}">Viewed Posts</a>
+<a>My Comments</a>
+<a href="{% url 'blogger-profile' user.id %}">Settings</a>
+{% endblock %}

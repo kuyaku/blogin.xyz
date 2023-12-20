@@ -1,0 +1,111 @@
+/* 320px — 480px: Mobile devices
+481px — 768px: iPads, Tablets
+769px — 1024px: Small screens, laptops
+1025px — 1200px: Desktops, large screens
+1201px and more —  Extra large screens, TV */
+
+@media (max-width: 1200px) {
+    /* body {
+        background-color: lightpink;
+    } */
+}
+@media (max-width: 1024px) {
+    /* body {
+        background-color: lightyellow;
+    } */
+    
+    .dashboard-sidebar {
+        display: none;
+        width: 0;
+    }
+
+}
+@media (max-width: 768px) {
+    /* body {
+        background-color: lightblue;
+    } */
+
+    .main-section-board {
+        width: 100%;
+        padding: 3px;
+    }
+
+    
+    .dashboard-right-section {
+        padding: 10px;
+    }
+    
+    .dashboard-post {
+        padding: 5px;
+        /* border: 2px solid green; */
+        max-width: 100%;
+    }
+    
+    /* .post-buttons {
+        flex-direction: column;
+    } */
+    
+    .post-main {
+        gap: 10px;
+        max-width: 100%;
+    }
+    
+    #post-img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .post-info {
+        gap: 2px;
+        /* border: 1px solid blue; */
+        justify-content: flex-start;
+    }
+
+    
+    .post-info img, .comment-view-like img {
+        height: 18px;
+        width: 18px;
+    } 
+
+    .post-content h3 {
+        font-size: 1rem;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: rgb(59, 59, 59);
+    }
+}
+@media (max-width: 480px) {
+    body {
+        background-color: white;
+    }
+    .post-short-description {
+        display: none;
+    }
+
+    #dashboard-form {
+        min-width: 100px;
+        padding: 20px 10px;
+        max-width: 250px;
+    }
+    #form-disclaimer {
+        font-size: 1.1rem;
+    }
+    
+    #form-message {
+        font-size: 0.9rem;
+    }
+    
+    #decline, #proceed {
+        min-width: 75px;
+        font-size: 1rem;
+    }
+    .post-buttons {
+        flex-direction: column;
+        /* border: 1px solid red; */
+    }
+}
+
+@media (max-width: 350px) {
+    body {
+        background-color: white;
+    }
+}

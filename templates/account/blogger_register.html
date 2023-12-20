@@ -1,0 +1,33 @@
+{% extends './signup.html' %}
+
+{% block login-logout-title %}
+<h1 id="blogger-signup-heading">Become a Blogger</h1>
+{% endblock %}
+
+{% block login-signup-form %}
+<form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="stretch-full">
+        <h3 style="text-align: end;">Hi, {{request.user.username}}</h3>
+    </div>
+    <!-- <div class="blogger-signup-picture flex">
+        <p>Profile Picture: {{form.profile_picture}}</p>
+    </div> -->
+    <div class="stretch-full hover-focus blogger-signup">
+        {{form.bio}}
+    </div>
+    <div class="stretch-full hover-focus blogger-signup">
+        {{form.interests}}
+    </div>
+    {% block login-logout-submit %}
+    <div class="stretch-full submit-button">
+        <input type="submit" value = "Sign up">
+    </div>
+    {% endblock %}
+    {% block login-logout-extra %}
+    <div class="stretch-full signup-button">
+        <p>Already have an account? <a style="color: blue;" href="{% url 'account_login' %}">Login now.</a></p>
+    </div>
+    {% endblock %}
+</form>
+{% endblock %}

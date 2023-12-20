@@ -1,0 +1,79 @@
+{% extends 'base3.html' %}
+{% load static %}
+{% block content %}
+<div class="blog-top">
+    <div class="blog-top-title">
+        <div class="blog-category-date">
+            <p>
+                {% for category in blog.post.categories.all %}
+                <strong>{{category.name}} </strong>
+                {% endfor %}
+            </p>
+            <p>{{blog.post.created_at}}</p>
+        </div>
+        <div class="blog-title">
+            <h1>{{blog.post.title}}</h1>
+        </div>
+        <div class="blog-user">
+            <div class="blog-user-img">
+                {% if blog.post.author.profile_picture %}
+                <img src="{{blog.post.author.profile_picture.url}}" alt="user-img">
+                {% else %}
+                <img src="{% static 'images/defaults/avatars/user.png' %}" alt="user-img">
+                {% endif %}
+            </div>
+            <div class="blog-user-info flex flex-col">
+                <div class="flex follow-button">
+                    <h2><a href="{% url 'blogger-detail' blog.post.author.id %}">{{blog.post.author.user.get_name}}</a></h2>                   
+                    {% if user.is_authenticated %}
+                    <form id="follow-form" action="{% url 'follow-action' blog.post.author.id %}" method="post">
+                        {% csrf_token %}
+                        <button class="follow-button-user follow-button-blog-detail" type="submit" name="follow-button">
+                            {% if has_followed %}
+                            <p id="unfollow">UNFOLLOW</p>
+                            {% else %}
+                            <p id="follow">FOLLOW</p]>
+                            {% endif %}
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+                <p>{{blog.post.author.my_blogs.count}} Posts | <span id="follower-count">{{blog.post.author.my_followers.count}}</span> Followers</p>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="user-like">
+                <form method="post" action="{% url 'like-action' blog.id %}" id="like-form">
+                    {% csrf_token %}
+                    <button type="submit" name="like-button">
+                        {% if has_liked %}
+                        <img class="liked-img" src="{% static 'images/icons/heart.png' %}">
+                        {% else %}
+                        <img class="liked-img" src="{% static 'images/icons/heart2.png' %}">
+                        {% endif %}
+                    </button>
+              </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="blog-top-image">
+        {% if blog.post.image %}
+        <img src="{{blog.post.image.url}}">
+        {% else %}
+        <img src="{% static 'images/defaults/posts/blog.png' %}" alt="blog">
+        {% endif %}
+    </div>
+</div>
+<div class="blog-bottom">
+    <div class="blog-subheading">
+        <h2>
+            {{blog.post.sub_title}}
+        </h2>
+    </div>
+    <div class="blog-content">
+        <p>
+            {{blog.post.content | safe}}
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,169 @@
+/* 320px — 480px: Mobile devices
+481px — 768px: iPads, Tablets
+769px — 1024px: Small screens, laptops
+1025px — 1200px: Desktops, large screens
+1201px and more —  Extra large screens, TV */
+
+
+@media (max-width: 1200px) {
+    /* body {
+        background-color: lightpink;
+    } */
+    .container {
+        width: 95%;
+    }
+    .container-blogger {
+        width: 90%;
+    }
+}
+@media (max-width: 1024px) {
+    /* body {
+        background-color: lightcoral;
+    } */
+
+    .container {
+        width: 100%;
+    }
+
+    .container-blogger {
+        width: 100%;
+        gap: 20px;
+    }
+    .post-short-description {
+        display: none;
+    }
+
+    .blogger-posts {
+        width: 100%;
+    }
+
+    .similar-bloggers {
+       padding: 10px 0;
+    }
+
+    .blogger-list {
+        flex-direction: row;
+        gap: 10px;
+        padding: 10px 0;
+        overflow-x: auto;
+    }
+
+    .blogger-card {
+        padding: 10px 0;
+        min-width: 200px;
+        border-right: 1px solid rgb(233, 233, 233);
+    }
+
+    .container-bottom {
+        margin-top: 1rem;
+        flex-direction: column-reverse;
+
+    }
+
+    /* .blogger-list {
+        gap: 10px;
+    }
+
+    .blogger-card-left img {
+        height: 50px;
+        width: 50px;
+    }
+
+    .blogger-card {
+        display: flex;
+        gap: 5px;
+    }
+
+    .blogger-card-right {
+        gap: 2px;
+    }
+
+    .blogger-card-right p {
+        font-size: 0.7rem;
+    }
+
+    .blogger-card-right h2, p, button {
+        font-size: 1rem;
+    } */
+
+}
+@media (max-width: 768px) {
+    /* body {
+        background-color: lightgreen;
+    } */
+
+    .container-blogger {
+        width: 90%;
+        gap: 20px;
+    } 
+
+    .blogger-posts {
+        padding: 5px;
+    }
+
+    .container-blogger-image img {
+        height: 80px;
+        width: 80px;
+    }
+
+    .blogger-username {
+        gap: 10px;
+    }
+
+    .blogger-username h1 {
+        font-size: 1.3rem;
+    }
+
+    .container-blogger {
+        gap: 5px;
+    }
+
+    .container-blogger-info {
+        padding: 5px 0;
+    }
+
+    .user-info-large {
+        display: none;
+    }
+
+    .user-info-small {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .blogger-bio p, .blogger-interests p {
+        font-size: 1rem;
+        padding-bottom: 0;
+    }
+
+    .blogger-interests span {
+        font-size: 0.8rem;
+    }
+
+    .blogger-posts-follows p {
+        font-size: 1rem;
+    }
+
+    #follow, #unfollow {
+        font-size: 0.8rem;
+    }
+
+    .create-buttons {
+        gap: 5px;
+        padding-right: 10px;
+    }
+
+    .publish-button {
+        font-size: 1rem;
+        padding: 4px;
+    }
+
+    .dashboard-button, .save-button {
+        font-size: 1rem;
+    }
+}
+@media (max-width: 480px) {
+    /* body {
+        background-color: lightblue;
+    } */
+}

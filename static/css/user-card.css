@@ -1,0 +1,75 @@
+.blogger-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 10px;
+    /* border: 1px solid blue; */
+}
+
+.blogger-card {
+    display: flex;
+    gap: 10px;
+    /* border: 1px solid red; */
+}
+
+.blogger-card-left img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.blogger-card-right {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.blogger-card-right h2, p, button {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1rem;
+}
+
+.blogger-card-right-info {
+    gap: 1px;
+    flex-wrap: wrap;
+}
+
+.blogger-card-right button {
+    /* border: 1px solid red; */
+    width: fit-content;
+    padding: 1px;
+    font-weight: bold;
+    color: green;
+}
+
+.blogger-card-right p {
+    font-size: 0.8rem;
+}
+
+
+#follow {
+    /* border: 1px solid red; */
+    padding: 7px;
+    background-color: rgb(84, 84, 238);
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+    border: 2px solid rgb(84, 84, 238);
+}
+
+#unfollow {
+    border: 2px solid rgb(65, 64, 64);
+    border-radius: 5px;
+    font-weight: 600;
+    padding: 7px;
+    background-color: white !important;
+    color: black;
+}
+
+.follow-button-blog-detail p {
+    padding: 3px !important;
+    font-size: 0.9rem !important;
+}

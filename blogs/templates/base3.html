@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/generic.css' %}">
+    <link rel="stylesheet" href="{% static 'css/output2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/output3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/output4.css' %}">
+    <link rel="stylesheet" href="{% static 'css/output5.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user-card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/media4.css' %}">
+    <link rel="stylesheet" href="{% static 'css/media3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/media5.css' %}">
+    <link rel="stylesheet" href="{% static 'css/media6.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile_media.css' %}">
+</head>
+<body>
+    <div class="main-container main-container-style-2">
+        <div class="header">
+            <div class="header-left logo">
+                <h1><a href="{% url 'home' %}">blogin.xyz</a></h1>
+            </div>
+            {% block midheader %}
+            <div class="header-middle">
+                <a href="{% url 'home' %}">HOME</a>
+                <a>ABOUT</a>
+                {% if user.is_authenticated %}
+                {% if is_blogger %}
+                <a href="{% url 'dashboard' user.id %}">Dashboard</a>
+                {% else %}
+                <a href="{% url 'viewed-posts' user.id %}">Dashboard</a>
+                {% endif %}
+                {% endif %}
+            </div>
+            {% endblock %}
+            {% block rightheader %}
+            <div class="header-right">
+                {% if user.is_authenticated %}
+                <div class="header-right-user">
+                        <p id="username-header" style="cursor: pointer; display: flex; align-items: center; gap: 5px;">Hi {{user.get_name}}  <img id="nav-icon" src="{% static 'images/icons/down-chevron.png' %}" alt="v"></p>
+                    <div class="user-navbar" id="header-nav-items2">
+                        <div class="flex flex-col user-navbar-item">
+                            {% if is_blogger %}
+                            <a href="{% url 'blogger-profile' user.id %}">Settings</a>
+                            {% endif %}
+                            <a href="{% url 'account_logout' %}">Logout</a>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <a href="{% url 'account_login' %}">LOGIN</a>
+                <a href="{% url 'account_signup' %}" id="signup-button">SIGNUP</a>
+                {% endif %}
+            </div>
+            <div class="menu-icon">
+                {% if user.is_authenticated %}
+                <img id="navigation-button" src="{% static 'images/icons/navigation.png' %}">
+                <div class="flex flex-col header-nav-items" id="header-nav-items">
+                    <div class="nav-item nav-divider">
+                        <a href="{% url 'home' %}">Home</a>
+                        {% if is_blogger %}
+                        <a href="{% url 'dashboard' user.id %}">Dashboard</a>
+                        {% else %}
+                        <a href="{% url 'viewed-posts' user.id %}">Dashboard</a>
+                        {% endif %}
+                        <a href="{% url 'blog-list' %}">All Blogs</a>
+                        <a href="{% url 'viewed-posts' request.user.id %}">Reading list</a>
+                        <a href="{% url 'liked-posts' request.user.id %}">Liked Posts</a>
+                    </div>
+                    <div class="nav-item nav-divider">
+                        <a href="{% url 'blogger-profile' user.id %}">Settings</a>
+                        <a href="{% url 'home' %}">Followers</a>
+                        <a href="{% url 'home' %}">Following</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="{% url 'blog-create' %}">+ New Blog</a>
+                        <a href="{% url 'account_logout' %}">Logout</a>
+                    </div>
+                </div>
+                {% endif %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="other-content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <div class="modal" id="modal">
+        {% block modal %}
+        {% endblock %}
+    </div>
+    <script src="{% static 'js/like.js' %}"></script>
+    <script src="{% static 'js/follow.js' %}"></script>
+    <script src="{% static 'js/follow2.js' %}"></script>
+    <script src="{% static 'js/unpublish.js' %}"></script>
+    <script src="{% static 'js/publish.js' %}"></script>
+    <script src="{% static 'js/delete.js' %}"></script>
+    <script src="{% static 'js/navigation.js' %}"></script>
+    <!-- <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script> -->
+    <script defer src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <!-- <script src="{% static 'js/show_styling.js' %}"></script> -->
+
+</body>
+</html>

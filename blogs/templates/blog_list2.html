@@ -1,0 +1,223 @@
+{% extends 'base3.html' %}
+{% load static %}
+{% block content %}
+<div class="blogs-top">
+    <form id="search-form" method="get">
+        {% csrf_token %}
+        <input type="text" placeholder="Search">
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div class="blog-main">
+    <div class="blog-main-top">
+        <div class="blog-main-left">
+            {% if top_blog %}
+            <div class="top_blog_image">
+                {% if top_blog.post.image %}
+                <img src="{{top_blog.post.image.url}}">
+                {% else %}
+                <img src="{% static 'images/defaults/posts/blog.png' %}">
+                {% endif %}
+            </div>
+            <div class="top_blog_content">
+                <div class="categories">
+                    <p>
+                        {% for category in top_blog.post.categories.all %}
+                        <strong>{{category}} </strong>
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="top_blog_title">
+                    <h2><a href="{% url 'blog-detail' top_blog.post.id %}">{{top_blog.post.title}}</a></h2>
+                </div>
+                <div class="top_blog_meta">
+                    <div class="top_blog_meta_left">
+                        <div class="date">
+                            <p>{{top_blog.posted_at}}</p>
+                        </div>
+                        <div class="blog_author">
+                            <p>By <a href="{% url 'blogger-detail' top_blog.post.author.id %}">{{top_blog.post.author}}</a></p>
+                        </div>
+                    </div>
+                    <div class="top_blog_meta_right">
+                        <img class="icon-img" src="{% static '/images/icons/heart.png' %}" alt="LIKES">
+                        <p>{{top_blog.likes.count}}</p>
+                        <img class="icon-img" src="{% static '/images/icons/view.png' %}" alt="LIKES">
+                        <p>{{top_blog.views.count}}</p>
+                    </div>
+                </div>
+                <div class="top_blog_short_description">
+                    <p>
+                        {{top_blog.post.get_short_description | safe}}
+                    </p>
+                  
+                </div>
+                <div class="top_blog_bottom">
+                    <a href="{% url 'blog-detail' top_blog.id %}">Read More -></a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="blog-main-right heading">
+            <h2>Most popular</h2>
+            <div></div>
+            <div class="post-long-container custom-scroll">
+                {% for blog in top_liked_blogs %}
+                <div class="post-long-card">
+                    <div class="post-long-image">
+                        {% if blog.post.image %}
+                        <img src="{{blog.post.image.url}}">
+                        {% else %}
+                        <img src="{% static 'images/defaults/posts/blog.png' %}">
+                        {% endif %}
+                    </div>
+                    <div class="post-long-content">
+                        <div class="post-long-category">
+                            <p>
+                                {% for category in blog.post.categories.all %}
+                                <strong> {{category}}</strong>
+                                {% endfor %}
+                            </p>
+                        </div>
+                        <div class="post-long-title">
+                            <h2 title="{{blog.post.title}}" class="post-title"><a href="{% url 'blog-detail' blog.id %}">{{blog.post.get_short_heading}}</a></h2>
+                        </div>
+                        <div class="post-long-meta">
+                            <img class="icon-img" src="{% static 'images/icons/heart.png' %}" alt="LIKES">
+                            <p>{{blog.likes.count}}</p>
+                            <img class="icon-img" src="{% static 'images/icons/view.png' %}" alt="LIKES">
+                            <p>{{blog.views.count}}</p>
+                        </div>
+                        <div class="post-long-bottom">
+                            <p class="date blog_author">{{blog.get_date}} By <a href="{% url 'blogger-detail' blog.post.author.id %}">{{blog.post.author}}</a></p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="blog-main-main flex flex-col">
+        <div class="heading">
+            <h2>Most viewed</h2>
+        </div>
+        <div class="blog-scroll-container custom-scroll">
+            {% for blog in top_viewed_blogs %}
+            <div class="post-vertical-card">
+                <div class="post-image-vertical">
+                    {% if blog.post.image %}
+                    <img class="rounded-sm" src="{{blog.post.image.url}}">
+                    {% else %}
+                    <img class="rounded-sm" src="{% static 'images/defaults/posts/blog.png' %}">
+                    {% endif %}
+                </div>
+                <div class="post-content-vertical flex flex-col">
+                    <div class="post-long-category">
+                        <p>
+                            {% for category in blog.post.categories.all %}
+                            <strong> {{category}}</strong>
+                            {% endfor %}
+                        </p>
+                    </div>
+                    <div class="post-long-title">
+                        <h2 class="post-title"><a href="{% url 'blog-detail' blog.id %}">{{blog.post.get_short_heading2}}</a></h2>
+                    </div>
+                    <div class="post-long-meta">
+                        <img class="icon-img" src="{% static 'images/icons/heart.png' %}" alt="LIKES">
+                        <p>{{blog.likes.count}}</p>
+                        <img class="icon-img" src="{% static 'images/icons/view.png' %}" alt="LIKES">
+                        <p>{{blog.views.count}}</p>
+                    </div>
+                    <div class="post-long-bottom">
+                        <p class="date blog_author">{{blog.get_date}} By <a href="{% url 'blogger-detail' blog.post.author.id %}">{{blog.post.author}}</a></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="blog-main-main flex flex-col">
+        {% if my_followedBloggers_blogs %}
+        <div class="heading">
+            <h2>From people you follow</h2>
+        </div>
+        <div class="blog-scroll-container custom-scroll">
+            {% for blog in my_followedBloggers_blogs %}
+            <div class="post-vertical-card">
+                <div class="post-image-vertical">
+                    {% if blog.post.image %}
+                    <img class="rounded-sm" src="{{blog.post.image.url}}">
+                    {% else %}
+                    <img class="rounded-sm" src="{% static 'images/defaults/posts/blog.png' %}">
+                    {% endif %}
+                </div>
+                <div class="post-content-vertical flex flex-col">
+                    <div class="post-long-category">
+                        <p>
+                            {% for category in blog.post.categories.all %}
+                            <strong> {{category}}</strong>
+                            {% endfor %}
+                        </p>
+                    </div>
+                    <div class="post-long-title">
+                        <h2 class="post-title"><a href="{% url 'blog-detail' blog.id %}">{{blog.post.get_short_heading2}}</a></h2>
+                    </div>
+                    <div class="post-long-meta">
+                        <img class="icon-img" src="{% static 'images/icons/heart.png' %}" alt="LIKES">
+                        <p>{{blog.likes.count}}</p>
+                        <img class="icon-img" src="{% static 'images/icons/view.png' %}" alt="LIKES">
+                        <p>{{blog.views.count}}</p>
+                    </div>
+                    <div class="post-long-bottom">
+                        <p class="date blog_author">{{blog.get_date}} By <a href="{% url 'blogger-detail' blog.post.author.id %}">{{blog.post.author}}</a></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="blog-main-main flex flex-col">
+        <div class="heading">
+            <h2>All Posts</h2>
+        </div>
+        <div class="all-posts">
+            {% for blog in top_viewed_blogs %}
+            <div class="post-vertical-card post-vertical-card-all-posts all-posts-all">
+                <div class="post-image-vertical all-posts-img">
+                    {% if blog.post.image %}
+                    <img class="rounded-sm" src="{{blog.post.image.url}}">
+                    {% else %}
+                    <img class="rounded-sm" src="{% static 'images/defaults/posts/blog.png' %}">
+                    {% endif %}
+                </div>
+                <div class="post-content-vertical flex flex-col">
+                    <div class="post-long-category">
+                        <p>
+                            {% for category in blog.post.categories.all %}
+                            <strong> {{category}}</strong>
+                            {% endfor %}
+                        </p>
+                    </div>
+                    <div class="post-long-title">
+                        <h2 class="post-title"><a href = "{% url 'blog-detail' blog.id %}">{{blog.post.get_short_heading2}}</a></h2>
+                    </div>
+                    <div class="post-long-meta">
+                        <img class="icon-img" src="{% static 'images/icons/heart.png' %}" alt="LIKES">
+                        <p>{{blog.likes.count}}</p>
+                        <img class="icon-img" src="{% static 'images/icons/view.png' %}" alt="LIKES">
+                        <p>{{blog.views.count}}</p>
+                    </div>
+                    <div class="post-description">
+                        <p>{{blog.post.get_very_very_short_description | safe}}</p>
+                    </div>
+                    <div class="post-long-bottom">
+                        <p class="date blog_author">{{blog.get_date}} By <a href="{% url 'blogger-detail' blog.post.author.id %}">{{blog.post.author}}</a></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

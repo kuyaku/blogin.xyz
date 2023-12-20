@@ -1,0 +1,24 @@
+{% extends './login.html' %}
+{% load i18n allauth %}
+
+{% block login-logout-title %}
+<h1 style="color: rgb(112, 7, 7); border-bottom-color: rgb(112, 7, 7);">Sign Out</h1>
+{% endblock %}
+
+
+
+{% block remember-me %}
+{% endblock %}
+
+{% block login-signup-form %}
+<p style="font-size: 1.2rem; padding-bottom: 10px;">Are you sure you want to sign out?</p>
+<form method="post" action="{% url 'account_logout' %}">
+    {% csrf_token %}
+    {% if redirect_field_value %}
+    <input type="hidden"
+           name="{{ redirect_field_name }}"
+           value="{{ redirect_field_value }}" />
+    {% endif %}
+    <button style="border-radius: 5px; font-size: 1.1rem; background-color: red; color: white; font-weight: bold; padding: 10px; margin-top: 10px; margin: auto; width: fit-content;" type="submit">Sign Out</button>
+</form>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/generic.css' %}">
+    <link rel="stylesheet" href="{% static 'css/output2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/post-card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user-card.css' %}">
+</head>
+<body class="body">
+    <div class="main-container">
+        <div class="side-bar">
+            <div class="side-bar-top">
+                <h1 class="side-bar-top-logo logo"><a href="{% url 'home' %}">bloggin.xyz</a></h1>
+                {% if user.is_authenticated %}
+                <div>
+                    <h2>Hi</h2>
+                    <h2>{{user.username}}</h2>
+                </div>
+                {% else %}
+                <div>
+                    <button><a href="{% url 'account_login' %}">Login</a></button>
+                    <span> | </span>
+                    <button><a href="{% url 'account_signup' %}">Sign up</a></button>
+                </div>
+                {% endif %}
+            </div>
+            <div class="side-bar-middle">
+                    <a>HOME</a>
+                    <a>ABOUT</a>
+                    <a>CONTACT US</a>
+          
+            </div>
+            <div class="side-bar-bottom">
+                <div class="side-bar-bottom-top">
+                    <a>ALL POSTS</a>
+                    <a>MY POSTS</a>
+                    <div>
+                        <button>CREATE NEW</button>
+                    </div>
+                </div>
+                <div>
+                    <a href="{% url 'account_logout' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="main-container-main">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <script src="{% static 'js/follow.js' %}"></script>
+</body>
+</html>

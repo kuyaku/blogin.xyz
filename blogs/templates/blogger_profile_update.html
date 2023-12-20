@@ -1,0 +1,46 @@
+{% extends 'blogger_profile.html' %}
+
+{% block profile-link %}
+<a href="{% url 'blogger-profile' blogger.user.id %}">My Profile</a>
+{% endblock %}
+
+{% block user-profile %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="user-profile-right-sub user-bio-interest">
+        <p class="user-profile-label">Username</p>
+        <div class="profile-entry2">
+            {{form.username}}
+        </div>
+        {% if form.errors.username %}
+        <p style="color: red; padding-top: 3px;">Username already exists!</p>
+        {% endif %}
+    </div>
+    <div class="user-profile-right-sub user-bio-interest">
+        <p class="user-profile-label">First Name</p>
+        <div class="profile-entry2">
+            {{form.first_name}}
+        </div>
+    </div>
+    <div class="user-profile-right-sub user-bio-interest">
+        <p class="user-profile-label">Last Name</p>
+        <div class="profile-entry2">
+            {{form.last_name}}
+        </div>
+    </div>
+    <div class="user-profile-right-sub user-bio-interest">
+        <p class="user-profile-label">Bio</p>
+        <div class="profile-entry2">
+            {{form.bio}}
+        </div>
+    </div>
+    <div class="user-profile-right-sub user-bio-interest">
+        <p class="user-profile-label">Interests</p>
+        <div class="profile-entry2">
+            {{form.user_interests}}
+        </div>
+    </div>
+    <button type="submit">Update</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends './login.html' %}
+{% load i18n %}
+{% load account %}
+
+{% block login-logout-title %}
+<h1 style="color: rgb(112, 7, 7); border-bottom-color: rgb(112, 7, 7);">Email Confirmation</h1>
+{% endblock %}
+
+
+{% block remember-me %}
+{% endblock %}
+
+{% block login-signup-form %}
+{% if confirmation %}
+{% user_display confirmation.email_address.user as user_display %}
+<p style="font-size: 1.3rem;">{% blocktrans with confirmation.email_address.email as email %}Please confirm
+that <a style="color: rgb(249, 115, 22);" href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user
+{{ user_display }}.{% endblocktrans %}</p>
+<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+    {% csrf_token %}
+    <button style="padding: 10px; background-color: rgb(76, 76, 238); color: white; font-size: large; font-weight: 600; width: fit-content; border-radius: 5px; margin: auto; margin-top: 10px;" type="submit">{% trans 'Confirm' %}</button>
+</form>
+{% else %}
+{% url 'account_email' as email_url %}
+<p style="font-size: 1.3rem;">{% blocktrans %}This e-mail confirmation link expired or is invalid. Please
+<a style="color: rgb(249, 115, 22);" href="{{ email_url }}">issue a new e-mail confirmation request</a>.
+{{email_url}}
+{% endblocktrans %}</p>
+{% endif %}
+{% endblock %}
