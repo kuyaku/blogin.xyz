@@ -15,8 +15,8 @@ class PostCreateForm(forms.ModelForm):
         fields = ['content', 'title', 'sub_title', 'category_names', 'tags']
         # fields = '__all__'
     
-    class Media:
-        js = ('ckeditor/ckeditor.js', 'js/ckeditor_config.js')
+    # class Media:
+    #     js = ('ckeditor/ckeditor.js', 'js/ckeditor_config.js')
 
 
     def clean_category_names(self):
